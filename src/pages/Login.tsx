@@ -6,7 +6,7 @@ import Header from '../components/Header';
 
 export default function Login() {
   return (
-    <div>
+    <div className="bg-zinc-50">
       <Header />
       <div className="flex float-right w-[42rem] h-[42rem] mr-[10rem]">
         <img className="MainImage" alt="mainimage" src="images/magic.gif" />
