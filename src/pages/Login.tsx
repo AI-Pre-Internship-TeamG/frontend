@@ -11,13 +11,13 @@ export default function Login() {
       <div className="flex float-right w-[42rem] h-[42rem] mr-[10rem]">
         <img className="MainImage" alt="mainimage" src="images/magic.gif" />
       </div>
-      <div className="flex w-[55rem] h-[4rem] ml-[5rem] mt-[5rem] font-bold text-6xl">
+      <div className="flex w-[55rem] h-[4rem] ml-[5rem] mt-[5rem] font-bold font-melon text-8xl">
         <p>지우고 싶은 이미지</p>
       </div>
-      <div className="flex w-[55rem] h-[4rem] ml-[5rem] mt-[2rem] font-bold text-6xl">
+      <div className="flex w-[55rem] h-[4rem] ml-[5rem] mt-[3rem] font-bold font-melon text-8xl">
         <p>깔끔하게 지워드립니다!</p>
       </div>
-      <div className="flex justify-center items-center mt-20 font-melon">
+      <div className="flex justify-center mt-[10rem] font-sds text-6xl">
         <Link
           to="/SignUp"
           style={{ color: 'inherit', textDecoration: 'inherit' }}
