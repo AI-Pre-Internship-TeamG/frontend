@@ -6,7 +6,7 @@ export default function LogoutBtn() {
     <div className="Logout">
       <div className="float-right mt-[4rem] mr-[3rem] font-sds text-4xl">
         <Link to="/" style={{ color: 'inherit', textDecoration: 'inherit' }}>
-          로 그 아 웃
+          Logout
         </Link>
       </div>
     </div>
