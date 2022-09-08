@@ -7,6 +7,7 @@ module.exports = {
       fontFamily: {
         sds: ['"SDSamliphopangche_Outline"'],
         melon: ['"116watermelon"'],
+        bmjua: ['BMJUA'],
       },
     },
   },
