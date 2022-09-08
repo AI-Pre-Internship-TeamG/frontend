@@ -10,9 +10,17 @@ function PictureUpload() {
       <LogoutBtn />
       <MyPageBtn />
       <Header />
+      <div
+        style={{
+          flex: 1,
+          height: '5px',
+          backgroundColor: 'black',
+          marginBottom: '10px',
+        }}
+      />
       <div className="flex ml-[4rem] text-3xl font-myy">Upload</div>
       <div className="flex justify-center items-center">
-        <div className="justify-center items-center border-dashed rounded-2xl h-[30rem] w-[30rem] p-4 border-4">
+        <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 border-4">
           <div className="flex justify-center items-center mt-[5rem]">
             <img
               src="Images/Upload_Icon.png"
