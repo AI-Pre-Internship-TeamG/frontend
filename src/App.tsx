@@ -9,6 +9,7 @@ import PictureUpload from './pages/PictureUpload';
 import PictureEdit from './pages/PictureEdit';
 import Results from './pages/Results';
 import MyPage from './pages/MyPage';
+import Management from './pages/Management';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/pictureedit" element={<PictureEdit />} />
           <Route path="/results" element={<Results />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/management" element={<Management />} />
         </Routes>
       </div>
     </BrowserRouter>
