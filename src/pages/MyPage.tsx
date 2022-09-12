@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import ImgList from '../components/ImgCard';
-import ImgCard from '../components/ImgCard';
+import ImgList from '../components/imgList';
 
 export interface Data {
   img_url: string;
@@ -20,7 +18,7 @@ const MyPage = () => {
     <>
       <Header/>
       <div className="container flex flex-row flex-wrap grow-0 box-border gap-y-5">  
-        {datas?.map(data => <ImgList key={data.img_url} data={data} />)}
+        {datas?.map(data => <ImgList key={data.img_url} data={datas} />)}
       </div>
     </>
   )
