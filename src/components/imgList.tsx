@@ -11,9 +11,9 @@ export interface data {
     date: string;
   }
 
-const ImgList = ({ data }: { data: data[] }) => (
+const ImgList = ({ data }: { data: data[] | undefined }) => (
     <div className="container flex flex-row flex-wrap grow-0 box-border gap-y-5">
-        {data.map(data => <ImgCard key={data.img_url} data={data} />)}
+        {data?.map(data => <ImgCard key={data.img_url} data={data} />)}
     </div>        
 )
 
