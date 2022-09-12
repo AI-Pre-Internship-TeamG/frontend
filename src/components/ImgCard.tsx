@@ -7,16 +7,14 @@ export interface data {
 }
 
 const ImgCard = ({ data }: { data: data }) => (
-    <div className="flex ">
-        <p>
-            <img alt="Img" className="object-cover block h-auto w-[20rem]" src={data.img_url} />
-        </p>
+    <div className="flex flex-col w-1/3">
+        <img alt="Img" className="flex h-auto w-auto m-3" src={data.img_url} />
         <footer className="flex items-center justify-between leading-none p-2 md:p-4">
             <h1 className="text-lg">
                 {data.date}
             </h1>
             <button type="button">
-                <Trash className="hover:bg-red-500" />
+                <Trash className="hover:fill-red-500" />
             </button>
         </footer>
     </div>

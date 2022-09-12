@@ -19,7 +19,9 @@ const MyPage = () => {
   return (
     <>
       <Header/>
-      {datas?.map(data => <ImgList key={data.img_url} data={data} />)}
+      <div className="container flex flex-row flex-wrap grow-0 box-border gap-y-5">  
+        {datas?.map(data => <ImgList key={data.img_url} data={data} />)}
+      </div>
     </>
   )
 }

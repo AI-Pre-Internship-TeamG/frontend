@@ -12,11 +12,9 @@ export interface data {
   }
 
 const ImgList = ({ data }: { data: data[] }) => (
-    
-
-    <div className="p-4">  
+    <div className="m-4">
         {data.map(data => <ImgCard key={data.img_url} data={data} />)}
-    </div>
+    </div>        
 )
 
 export default ImgList;
