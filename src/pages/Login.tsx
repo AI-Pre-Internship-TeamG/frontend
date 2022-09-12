@@ -19,7 +19,7 @@ export default function Login() {
       </div>
       <div className="flex justify-center mt-[10rem] font-sds text-6xl">
         <Link
-          to="/SignUp"
+          to="/pictureupload"
           style={{ color: 'inherit', textDecoration: 'inherit' }}
         >
           로 그 인
