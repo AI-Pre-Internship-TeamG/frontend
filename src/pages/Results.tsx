@@ -4,26 +4,10 @@ import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 import Button from '../components/Button';
 
-function useWindowSize() {
-  const [size, setSize] = useState([window.innerHeight, window.innerWidth]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setSize([window.innerHeight, window.innerWidth]);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  return size;
-}
 
 export default function Results() {
-  // const [height, width] = useWindowSize();
   return (
     <div className="bg-zinc-50"> 
-    {/* style={{width: width, height: "auto"}} */}
       <LogoutBtn />
       <MyPageBtn />
       <Header />
