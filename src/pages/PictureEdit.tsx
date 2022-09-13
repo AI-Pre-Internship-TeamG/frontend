@@ -1,8 +1,13 @@
+/* eslint-disable import/order */
+/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
+import Btn from '../components/Btn';
+
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { BsEraser } from 'react-icons/bs';
 
 export default function PictureEdit() {
   return (
@@ -24,6 +29,15 @@ export default function PictureEdit() {
           <div className="justify-center text-4xl mt-[3rem] font-bmjua">
             이미지 수정
           </div>
+        </div>
+      </div>
+      <Btn name={'확정하기'} />
+      <Btn name={'미리보기'} />
+      <div className="flex float-right mt-[3rem] mr-[18rem]">
+        <div className="flex w-[15rem] h-[4rem] justify-center items-center bg-white border-zinc-900 rounded-full">
+          <FaAngleLeft className="flex w-[4rem] h-[3rem]" />
+          <BsEraser className="flex w-[4rem] h-[3rem]" />
+          <FaAngleRight className="flex w-[4rem] h-[3rem]" />
         </div>
       </div>
     </div>
