@@ -1,14 +1,10 @@
 import React from "react";
 
-const Button=({name}:{name:String})=>{
+export default function Button({name}:{name:string}){
     return(
-        <>
-        <button className="flex rounded-md font-bmjua text-2xl m-5 bg-orange-100 items-center justify-items-ceneter hover:bg-orange-300"
-                style={{width:'180px',height:'50px',alignItems:'center',justifyContent:'center'}}
-        >
-            <p>{name}</p>
+        <button type="button" className="flex w-48 h-12 rounded-md font-bmjua text-2xl m-5 bg-orange-100 items-center justify-items-ceneter hover:bg-orange-300">
+            <p className="w-full">{name}</p>
         </button>
-        </>
+    
     );
-};
-export default Button;
+}
