@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import ImgList from '../components/imgList';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
+import Pagination from '../components/Pagination';
 
 export interface Data {
   img_url: string;
@@ -24,6 +25,7 @@ const MyPage = () => {
       <div className="m-4">  
         <ImgList data={datas} />
       </div>
+      <Pagination/>
     </>
   )
 }
