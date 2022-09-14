@@ -46,6 +46,7 @@ function ManagementPage() {
           </div>
         </div>
       </div>
+      <BsTrash className="flex float-right w-[4rem] h-[3rem] mt-[2rem] mr-[8rem]" />
     </div>
   );
 }
