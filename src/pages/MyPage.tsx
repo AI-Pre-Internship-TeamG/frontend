@@ -56,5 +56,29 @@ const example: Data[] = [
   {
     img_url: "https://picsum.photos/600/400/?random",
     date: "2022.09.05"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.05"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.02"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.03"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.04"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.05"
+  },
+  {
+    img_url: "https://picsum.photos/600/400/?random",
+    date: "2022.09.05"
   }
 ]

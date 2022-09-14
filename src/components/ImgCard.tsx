@@ -7,7 +7,7 @@ export interface data {
 }
 
 const ImgCard = ({ data }: { data: data }) => (
-    <div className="flex flex-col w-1/3">
+    <div className="flex flex-col w-1/4">
         <img alt="Img" className="flex h-auto w-auto m-3" src={data.img_url} />
         <footer className="flex items-center justify-between leading-none p-2 md:p-4">
             <h1 className="text-lg">
