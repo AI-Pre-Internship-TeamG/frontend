@@ -6,6 +6,9 @@ import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 import Btn from '../components/Btn';
 
+/* React range */
+
+/* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
 
