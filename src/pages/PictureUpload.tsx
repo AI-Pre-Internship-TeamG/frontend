@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,DragEvent,ChangeEvent} from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
@@ -12,12 +12,23 @@ function PictureUpload() {
     
   };
   
-  const saveFileImage = (e: React.ChangeEvent<HTMLInputElement>)=>{
+  const saveFileImage = (e: ChangeEvent<HTMLInputElement>)=>{
     const target  = e.currentTarget;
     const files = (target.files as FileList)[0];
     const  blob = new Blob([files],{type:"images/jpg+png+jpeg"})
     setFileImage(URL.createObjectURL(blob));
   };
+  
+  const dragOver = (e:DragEvent<HTMLDivElement>)=>{
+    e.preventDefault();
+  };
+  const onDropFiles = (e:DragEvent<HTMLDivElement>)=>{
+    e.preventDefault();
+    const Dropfile =( e.dataTransfer.files as FileList)[0];
+    const Dropblob = new Blob([Dropfile],{type:"images/jpg+png+jpeg"})
+    setFileImage(URL.createObjectURL(Dropblob))
+  
+  }
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -34,7 +45,15 @@ function PictureUpload() {
       <div className="flex ml-[4rem] text-3xl font-myy">Upload</div>
       <div className="flex justify-center items-center flex-col">
         {!fileImage &&
-        <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 border-4">
+        <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 border-4"
+            onDrop={onDropFiles}
+            onDragOver={dragOver}
+        >
+          <input
+              name = "imageUpload"
+              type = "file"
+              style={{display:"none"}}
+              />
           <div className="flex justify-center items-center mt-[5rem]">
             <img
               src="Images/Upload_Icon.png"
