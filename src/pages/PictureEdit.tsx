@@ -5,14 +5,20 @@ import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 import Btn from '../components/Btn';
-
+import { useLocation } from 'react-router-dom';
 /* React range */
 
 /* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
 
+interface imgLocation {
+  data:string;
+}
 export default function PictureEdit() {
+  const location = useLocation();
+  const state = location.state as imgLocation;
+  const {data} = state;
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -28,11 +34,17 @@ export default function PictureEdit() {
       />
       <div className="flex ml-[4rem] text-3xl font-myy">Edit</div>
       <div className="flex justify-center items-center">
+        {!data &&
         <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 border-4">
           <div className="justify-center text-4xl mt-[3rem] font-bmjua">
             이미지 수정
           </div>
-        </div>
+        </div>}
+        {data &&
+          <div className="flex justify-center items-center  rounded-3xl h-[30rem] w-[30rem] p-4">
+             <img className = "flex w-auto h-auto max-h-[31rem]" alt = "Upload" src={data}/>
+          </div>
+        }
       </div>
       <Btn name={'확정하기'} />
       <Btn name={'미리보기'} />
