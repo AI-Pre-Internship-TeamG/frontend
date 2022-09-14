@@ -33,8 +33,8 @@ export default function PictureEdit() {
       </div>
       <Btn name={'확정하기'} />
       <Btn name={'미리보기'} />
-      <div className="flex float-right mt-[3rem] mr-[18rem]">
-        <div className="flex w-[15rem] h-[4rem] justify-center items-center bg-white border-zinc-900 rounded-full">
+      <div className="flex float-right mt-[6rem] mr-[26rem]">
+        <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
           <FaAngleLeft className="flex w-[4rem] h-[3rem]" />
           <BsEraser className="flex w-[4rem] h-[3rem]" />
           <FaAngleRight className="flex w-[4rem] h-[3rem]" />
