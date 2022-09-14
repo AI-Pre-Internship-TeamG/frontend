@@ -11,6 +11,7 @@ import Results from './pages/Results';
 import MyPage from './pages/MyPage';
 import ManagementPage from './pages/ManagementPage';
 
+
 function App() {
   return (
     <BrowserRouter>
