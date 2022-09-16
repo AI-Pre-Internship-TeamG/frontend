@@ -12,13 +12,10 @@ import { useLocation } from 'react-router-dom';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
 
-interface imgLocation {
-  data:string;
-}
+
 export default function PictureEdit() {
   const location = useLocation();
-  const state = location.state as imgLocation;
-  const {data} = state;
+  const state:string = location.state as string;
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -34,15 +31,15 @@ export default function PictureEdit() {
       />
       <div className="flex ml-[4rem] text-3xl font-myy">Edit</div>
       <div className="flex justify-center items-center">
-        {!data &&
+        {!state &&
         <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 border-4">
           <div className="justify-center text-4xl mt-[3rem] font-bmjua">
             이미지 수정
           </div>
         </div>}
-        {data &&
+        {state &&
           <div className="flex justify-center items-center  rounded-3xl h-[30rem] w-[30rem] p-4">
-             <img className = "flex w-auto h-auto max-h-[31rem]" alt = "Upload" src={data}/>
+             <img className = "flex w-auto h-auto max-h-[31rem]" alt = "Upload" src={state}/>
           </div>
         }
       </div>
