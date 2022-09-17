@@ -25,7 +25,7 @@ const MyPage = () => {
       <div className="m-4">  
         <ImgList data={datas} />
       </div>
-      <Pagination/>
+      <Pagination page={page} totalPages={totalPages} handlePagination={handlePages}/>
     </>
   )
 }
