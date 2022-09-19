@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const Pagination = ({ page, totalPages, handlePagination }:Props) => {
-  if (page === 1 && totalPages === 1) {
+    if (page === 1 && totalPages === 1) {
     return (
       <div className="flex items-center justify-center border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
         <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-center">
