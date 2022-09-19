@@ -7,8 +7,9 @@ import MyPageBtn from '../components/MyPageBtn';
 import Pagination from '../components/Pagination';
 
 export interface Data {
-  img_url: string;
-  date: string;
+  id: number;
+  url: string;
+  created_at: string;
 }
 
 interface Response {
@@ -27,27 +28,29 @@ export interface Meta {
 
 const MyPage = () => {
   const [datas, setDatas] = useState<Data[]>();
-  const [page, setPage] = useState<number>(5);
-  const [totalPages, setTotalPages] = useState(5);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState(0);
   const handlePages = (updatePage: number) => setPage(updatePage);
 
-  // const getData = async (page: number) => {
-  //   try {
-  //     const response = await axios.get('https://localhost:8000/api/v1/photos');
-  //     const imgData = response.data.images;
-  //     setTotalPages(response.data.meta.pages);
-  //   } catch(err) {
-  //     console.log(err);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getData(page); //
-  // }, [page]);
+  const getData = async (page: number) => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/v1/photos/', {
+        params: {"page": page},
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `` // 추후 관리하는 Token 삽입 할 것
+    }});
+      setDatas(response.data.images);
+      setTotalPages(response.data.meta.pages);
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    setDatas(example);
-  }, []); 
+    getData(page); //
+  }, [page]);
 
   return (
     <>
@@ -63,54 +66,3 @@ const MyPage = () => {
 }
 
 export default MyPage;
-
-const example: Data[] = [
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.08.30"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.01"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.02"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.03"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.04"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.05"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.05"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.02"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.03"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.04"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.05"
-  },
-  {
-    img_url: "https://picsum.photos/600/400/?random",
-    date: "2022.09.05"
-  }
-]
