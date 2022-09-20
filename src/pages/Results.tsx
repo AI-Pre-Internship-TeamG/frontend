@@ -8,7 +8,6 @@ import Button from '../components/Button';
 import { Data } from '../components/ImgCard';
 
 
-
 export default function Results() {
 
   const { id } = useParams();    
@@ -49,8 +48,8 @@ export default function Results() {
       <div className="flex items-center justify-items-ceneter flex-col w-full mt-10"  >
         <img src={data?.url} alt="이미지" style={{display:"flex", width:"40%", borderRadius:"2rem"}} className="image" />
       <div className="flex flex-row items-center justify-items-center w-1/3" >
-        <Button name= "다운로드"/>
-        <Button name = "공유하기"/>
+        <Button name= "다운로드" downUrl={data?.url}/>
+        <Button name = "공유하기" downUrl=" "/>
       </div>
       </div>
     </div>
