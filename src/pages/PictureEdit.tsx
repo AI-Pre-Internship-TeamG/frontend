@@ -18,10 +18,12 @@ import EditTool from '../components/EditTool';
 interface imgLocation {
   data: string;
 }
+
 export default function PictureEdit() {
   const location = useLocation();
   const state = location.state as imgLocation;
   const { data } = state;
+
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -46,6 +48,7 @@ export default function PictureEdit() {
             />
 
             <ReactSketchCanvas
+              id="canvas"
               strokeWidth={50}
               strokeColor="blue"
               className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
