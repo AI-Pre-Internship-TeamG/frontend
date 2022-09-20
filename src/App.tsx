@@ -21,7 +21,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/pictureupload" element={<PictureUpload />} />
           <Route path="/pictureedit" element={<PictureEdit/>} />
-          <Route path="/results" element={<Results />} />
+          <Route path="/results/:id" element={<Results />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/management" element={<ManagementPage />} />
         </Routes>
