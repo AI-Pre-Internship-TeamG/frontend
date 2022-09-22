@@ -7,7 +7,13 @@ import MyPageBtn from '../components/MyPageBtn';
 import { useLocation } from 'react-router-dom';
 
 /* React canvas */
-import { ReactSketchCanvas, ReactSketchCanvasRef, ExportImageType, ReactSketchCanvasProps, CanvasPath } from 'react-sketch-canvas';
+import {
+  ReactSketchCanvas,
+  ReactSketchCanvasRef,
+  ExportImageType,
+  ReactSketchCanvasProps,
+  CanvasPath,
+} from 'react-sketch-canvas';
 
 /* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
@@ -23,23 +29,22 @@ export default function PictureEdit() {
   const state = location.state as imgLocation;
   const { data } = state;
   const canvasRef = React.createRef<ReactSketchCanvasRef>();
-  const [dataURI, setDataURI] = React.useState<string>('');  
-  const [exportImageType, setexportImageType] =  React.useState<ExportImageType>('png');
+  const [dataURI, setDataURI] = React.useState<string>('');
+  const [exportImageType, setexportImageType] =
+    React.useState<ExportImageType>('jpeg');
   const [paths, setPaths] = React.useState<CanvasPath[]>([]);
 
   const [lastStroke, setLastStroke] = React.useState<{
     stroke: CanvasPath | null;
-  }>({ stroke: null});
+  }>({ stroke: null });
 
   const [canvasProps, setCanvasProps] = React.useState<
     Partial<ReactSketchCanvasProps>
   >({
     className: 'react-sketch-canvas',
     strokeWidth: 50,
-    eraserWidth: 5,
-    backgroundImage:
-      'https://upload.wikimedia.org/wikipedia/commons/7/70/Graph_paper_scan_1600x1000_%286509259561%29.jpg',
-    strokeColor: "blue",
+    backgroundImage: 'http://127.0.0.1/8000/api/v1/photos/process',
+    strokeColor: 'blue',
     canvasColor: '#FFFFFF',
     style: { borderRight: '1px solid #CCC' },
     svgStyle: {},
@@ -87,20 +92,20 @@ export default function PictureEdit() {
             <ReactSketchCanvas
               ref={canvasRef}
               onChange={onChange}
-              onStroke={(stroke) =>
-                setLastStroke({ stroke})
-              }
+              onStroke={(stroke) => setLastStroke({ stroke })}
               {...canvasProps}
               // id="canvas"
               // strokeWidth={50}
               // strokeColor="blue"
-              // className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
+              className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
             />
           </div>
         )}
       </div>
-      <button type="button" onClick={ () => imageExportHandler()}>확정하기</button> 
-      <button type="button">마리보기</button> 
+      <button type="button" onClick={() => imageExportHandler()}>
+        확정하기
+      </button>
+      <button type="button">마리보기</button>
       <EditTool />
       <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
