@@ -4,11 +4,10 @@ import * as React from 'react';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
-import Btn from '../components/Btn';
 import { useLocation } from 'react-router-dom';
 
 /* React canvas */
-import { ReactSketchCanvas } from 'react-sketch-canvas';
+import { ReactSketchCanvas, ReactSketchCanvasRef, ExportImageType, ReactSketchCanvasProps, CanvasPath } from 'react-sketch-canvas';
 
 /* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
@@ -23,6 +22,44 @@ export default function PictureEdit() {
   const location = useLocation();
   const state = location.state as imgLocation;
   const { data } = state;
+  const canvasRef = React.createRef<ReactSketchCanvasRef>();
+  const [dataURI, setDataURI] = React.useState<string>('');  
+  const [exportImageType, setexportImageType] =  React.useState<ExportImageType>('png');
+  const [paths, setPaths] = React.useState<CanvasPath[]>([]);
+
+  const [lastStroke, setLastStroke] = React.useState<{
+    stroke: CanvasPath | null;
+  }>({ stroke: null});
+
+  const [canvasProps, setCanvasProps] = React.useState<
+    Partial<ReactSketchCanvasProps>
+  >({
+    className: 'react-sketch-canvas',
+    strokeWidth: 50,
+    eraserWidth: 5,
+    backgroundImage:
+      'https://upload.wikimedia.org/wikipedia/commons/7/70/Graph_paper_scan_1600x1000_%286509259561%29.jpg',
+    strokeColor: "blue",
+    canvasColor: '#FFFFFF',
+    style: { borderRight: '1px solid #CCC' },
+    svgStyle: {},
+    exportWithBackgroundImage: false,
+    withTimestamp: true,
+    allowOnlyPointerType: 'all',
+  });
+  const onChange = (updatedPaths: CanvasPath[]): void => {
+    setPaths(updatedPaths);
+  };
+
+  const imageExportHandler = async () => {
+    const exportImage = canvasRef.current?.exportImage;
+
+    if (exportImage) {
+      const exportedDataURI = await exportImage(exportImageType);
+      setDataURI(exportedDataURI);
+    }
+    console.log(dataURI);
+  };
 
   return (
     <div className="bg-zinc-50">
@@ -48,16 +85,22 @@ export default function PictureEdit() {
             />
 
             <ReactSketchCanvas
-              id="canvas"
-              strokeWidth={50}
-              strokeColor="blue"
-              className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
+              ref={canvasRef}
+              onChange={onChange}
+              onStroke={(stroke) =>
+                setLastStroke({ stroke})
+              }
+              {...canvasProps}
+              // id="canvas"
+              // strokeWidth={50}
+              // strokeColor="blue"
+              // className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
             />
           </div>
         )}
       </div>
-      <Btn name={'확정하기'} />
-      <Btn name={'미리보기'} />
+      <button type="button" onClick={ () => imageExportHandler()}>확정하기</button> 
+      <button type="button">마리보기</button> 
       <EditTool />
       <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
