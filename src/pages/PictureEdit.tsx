@@ -44,8 +44,8 @@ export default function PictureEdit() {
     Partial<ReactSketchCanvasProps>
   >({
     className: 'react-sketch-canvas',
+    backgroundImage: '',
     strokeWidth: 50,
-    backgroundImage: 'http://127.0.0.1/8000/api/v1/photos/process',
     strokeColor: 'blue',
     canvasColor: '#FFFFFF',
     style: { borderRight: '1px solid #CCC' },
@@ -65,29 +65,20 @@ export default function PictureEdit() {
       const exportedDataURI = await exportImage(exportImageType);
       setDataURI(exportedDataURI);
     }
-    console.log(dataURI);
 
     const data = {
-      imgData: dataURI,
-      originImgUrl:
-        'https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/masking_img/a6ce34f9-99a9-4d1d-a151-eeab2af87b68',
-      token:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYzOTUxNDQ3LCJqdGkiOiJiNmJiOTQxN2E3NmU0Y2EwYmVlNGMyMWNiYTkxZGU5YSIsInVzZXJfaWQiOjE4fQ._0igvgb0mB-xfnno1FQxh36v4m88myX4jIxBF-ssgqs',
-    };
+      "imgData": dataURI,
+      "originImgUrl": "배경 이미지 url 삽입"
+    }
 
-    // const formData = dataURI;
-    axios
-      .post('http://localhost:8000/api/v1/photos/process/', data)
-      .then((response: any) => console.log(response.data));
-    // method: 'post',
-    // url: 'http://localhost:8000/api/v1/photos/process/',
-    // data: formData,
-    // headers: {
-    //   'Access-Control-Allow-Origin': 'http://localhost:8000',
-    //   'Content-Type': 'multipart/form-data',
-    //   Accept: 'application/json',
-    // },
-    // });
+    axios.post("http://localhost:8000/api/v1/photos/process/", data, 
+    {
+      headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }})
+        .then((response:any) =>(
+          console.log("respone이 들어오면 진행할 것")
+        ));
   };
 
   return (
@@ -110,9 +101,7 @@ export default function PictureEdit() {
             <img
               className="flex mt-[0.6rem] w-auto h-auto max-h-[31rem]"
               alt="Upload"
-              src={
-                'https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/masking_img/a6ce34f9-99a9-4d1d-a151-eeab2af87b68'
-              }
+              src={data}
             />
 
             <ReactSketchCanvas
