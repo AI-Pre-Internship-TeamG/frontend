@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 import { useLocation } from 'react-router-dom';
+import EditBtn from '../components/EditBtn';
+import axios from 'axios';
 
 /* React canvas */
 import {
@@ -102,11 +104,20 @@ export default function PictureEdit() {
           </div>
         )}
       </div>
-      <button type="button" onClick={() => imageExportHandler()}>
+      <button
+        className="float-right mt-[4rem] mr-[4rem] font-sds text-4xl"
+        type="button"
+        onClick={() => imageExportHandler()}
+      >
         확정하기
       </button>
-      <button type="button">마리보기</button>
-      <EditTool />
+      {/* <EditBtn name={'확정하기'} onClick={() => imageExportHandler()} /> */}
+      <button
+        className="float-right mt-[4rem] mr-[4rem] font-sds text-4xl"
+        type="button"
+      >
+        미리보기
+      </button>
       <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
           <FaAngleLeft className="flex w-[4rem] h-[3rem]" />
