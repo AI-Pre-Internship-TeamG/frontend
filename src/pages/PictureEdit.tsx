@@ -74,6 +74,7 @@ export default function PictureEdit() {
     axios.post("http://localhost:8000/api/v1/photos/process/", data, 
     {
       headers: {
+      'Content-Type': 'multipart/form-data',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
       }})
         .then((response:any) =>(
