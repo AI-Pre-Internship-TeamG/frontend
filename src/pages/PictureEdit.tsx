@@ -67,17 +67,27 @@ export default function PictureEdit() {
     }
     console.log(dataURI);
 
-    const formData = dataURI;
-    axios({
-      method: 'post',
-      url: 'http://localhost:8000/api/v1/photos/process/',
-      data: formData,
-      // headers: {
-      //   'Access-Control-Allow-Origin': 'http://localhost:8000',
-      //   'Content-Type': 'multipart/form-data',
-      //   Accept: 'application/json',
-      // },
-    });
+    const data = {
+      imgData: dataURI,
+      originImgUrl:
+        'https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/masking_img/a6ce34f9-99a9-4d1d-a151-eeab2af87b68',
+      token:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYzOTUxNDQ3LCJqdGkiOiJiNmJiOTQxN2E3NmU0Y2EwYmVlNGMyMWNiYTkxZGU5YSIsInVzZXJfaWQiOjE4fQ._0igvgb0mB-xfnno1FQxh36v4m88myX4jIxBF-ssgqs',
+    };
+
+    // const formData = dataURI;
+    axios
+      .post('http://localhost:8000/api/v1/photos/process/', data)
+      .then((response: any) => console.log(response.data));
+    // method: 'post',
+    // url: 'http://localhost:8000/api/v1/photos/process/',
+    // data: formData,
+    // headers: {
+    //   'Access-Control-Allow-Origin': 'http://localhost:8000',
+    //   'Content-Type': 'multipart/form-data',
+    //   Accept: 'application/json',
+    // },
+    // });
   };
 
   return (
@@ -100,7 +110,9 @@ export default function PictureEdit() {
             <img
               className="flex mt-[0.6rem] w-auto h-auto max-h-[31rem]"
               alt="Upload"
-              src={data}
+              src={
+                'https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/masking_img/a6ce34f9-99a9-4d1d-a151-eeab2af87b68'
+              }
             />
 
             <ReactSketchCanvas
