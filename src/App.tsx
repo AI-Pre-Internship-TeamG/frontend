@@ -10,7 +10,7 @@ import PictureEdit from './pages/PictureEdit';
 import Results from './pages/Results';
 import MyPage from './pages/MyPage';
 import ManagementPage from './pages/ManagementPage';
-
+import KakaoRedirectHandler from './components/KakaoRedirectHandler';
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
           <Route path="/results" element={<Results />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/management" element={<ManagementPage />} />
+          <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler/>} />
         </Routes>
       </div>
     </BrowserRouter>
