@@ -72,11 +72,11 @@ export default function PictureEdit() {
       method: 'post',
       url: 'http://localhost:8000/api/v1/photos/process/',
       data: formData,
-      headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:8000',
-        'Content-Type': 'multipart/form-data',
-        Accept: 'application/json',
-      },
+      // headers: {
+      //   'Access-Control-Allow-Origin': 'http://localhost:8000',
+      //   'Content-Type': 'multipart/form-data',
+      //   Accept: 'application/json',
+      // },
     });
   };
 
@@ -130,13 +130,13 @@ export default function PictureEdit() {
       >
         미리보기
       </button>
-      <div className="flex float-right mt-[6rem] mr-[26rem]">
+      {/* <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
           <FaAngleLeft className="flex w-[4rem] h-[3rem]" />
           <BsEraser className="flex w-[4rem] h-[3rem]" />
           <FaAngleRight className="flex w-[4rem] h-[3rem]" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
