@@ -107,7 +107,6 @@ export default function PictureEdit() {
       <button
         className="float-right mt-[4rem] mr-[4rem] font-sds text-4xl"
         type="button"
-        onClick={() => imageExportHandler()}
       >
         확정하기
       </button>
@@ -115,6 +114,7 @@ export default function PictureEdit() {
       <button
         className="float-right mt-[4rem] mr-[4rem] font-sds text-4xl"
         type="button"
+        onClick={() => imageExportHandler()}
       >
         미리보기
       </button>
