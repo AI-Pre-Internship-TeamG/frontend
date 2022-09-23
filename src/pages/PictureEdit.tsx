@@ -66,6 +66,18 @@ export default function PictureEdit() {
       setDataURI(exportedDataURI);
     }
     console.log(dataURI);
+
+    const formData = dataURI;
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/api/v1/photos/process/',
+      data: formData,
+      headers: {
+        'Access-Control-Allow-Origin': 'http://localhost:8000',
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
+    });
   };
 
   return (
