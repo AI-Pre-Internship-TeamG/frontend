@@ -11,13 +11,14 @@ import Results from './pages/Results';
 import MyPage from './pages/MyPage';
 import ManagementPage from './pages/ManagementPage';
 import KakaoRedirectHandler from './components/KakaoRedirectHandler';
+import GoogleRedirect from './components/GoogleRedirect';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/pictureupload" element={<PictureUpload />} />
           <Route path="/pictureedit" element={<PictureEdit/>} />
@@ -25,6 +26,8 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/management" element={<ManagementPage />} />
           <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler/>} />
+          <Route path="/oauth/callback/google" element={<GoogleRedirect/>} />
+
         </Routes>
       </div>
     </BrowserRouter>
