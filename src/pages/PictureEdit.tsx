@@ -40,6 +40,8 @@ export default function PictureEdit() {
     stroke: CanvasPath | null;
   }>({ stroke: null });
 
+  type Handlers = [string, () => void, string][];
+
   const [canvasProps, setCanvasProps] = React.useState<
     Partial<ReactSketchCanvasProps>
   >({
@@ -54,6 +56,7 @@ export default function PictureEdit() {
     withTimestamp: true,
     allowOnlyPointerType: 'all',
   });
+
   const onChange = (updatedPaths: CanvasPath[]): void => {
     setPaths(updatedPaths);
   };
@@ -67,20 +70,55 @@ export default function PictureEdit() {
     }
 
     const data = {
-      "imgData": dataURI,
-      "originImgUrl": "배경 이미지 url 삽입"
-    }
+      imgData: dataURI,
+      originImgUrl: '배경 이미지 url 삽입',
+    };
 
-    axios.post("http://localhost:8000/api/v1/photos/process/", data, 
-    {
-      headers: {
-      'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }})
-        .then((response:any) =>(
-          console.log("respone이 들어오면 진행할 것")
-        ));
+    axios
+      .post('http://localhost:8000/api/v1/photos/process/', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response: any) => console.log('respone이 들어오면 진행할 것'));
   };
+
+  const undoHandler = () => {
+    const undo = canvasRef.current?.undo;
+
+    if (undo) {
+      undo();
+    }
+  };
+
+  const redoHandler = () => {
+    const redo = canvasRef.current?.redo;
+
+    if (redo) {
+      redo();
+    }
+  };
+
+  const createButton = (
+    label: string,
+    handler: () => void,
+    themeColor: string
+  ) => (
+    <button
+      key={label}
+      className={`btn btn-${themeColor} btn-block`}
+      type="button"
+      onClick={handler}
+    >
+      {label}
+    </button>
+  );
+
+  const buttonsWithHandlers: Handlers = [
+    ['Undo', undoHandler, 'primary'],
+    ['Redo', redoHandler, 'primary'],
+  ];
 
   return (
     <div className="bg-zinc-50">
@@ -110,11 +148,18 @@ export default function PictureEdit() {
               onChange={onChange}
               onStroke={(stroke) => setLastStroke({ stroke })}
               {...canvasProps}
-              // id="canvas"
-              // strokeWidth={50}
-              // strokeColor="blue"
+              id="canvas"
+              strokeWidth={50}
+              strokeColor="blue"
               className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
             />
+            <div className="col-3 panel">
+              <div className="d-grid gap-2">
+                {buttonsWithHandlers.map(([label, handler, themeColor]) =>
+                  createButton(label, handler, themeColor)
+                )}
+              </div>
+            </div>
           </div>
         )}
       </div>
