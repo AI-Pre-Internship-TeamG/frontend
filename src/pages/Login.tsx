@@ -1,14 +1,21 @@
 /* eslint-disable react/button-has-type */
-import React,{useState} from 'react';
-import { Link } from 'react-router-dom';
+import React,{useEffect, useState} from 'react';
+import { useNavigate,Link} from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
 import Header from '../components/Header';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [modalOpen,setModalopen] = useState(false);
   function showModal(){
     setModalopen(true);
   }
+  useEffect(()=>{
+    const islogin = localStorage.getItem('token')
+    if (islogin){
+      navigate('/pictureupload')
+    }
+  },[])
   return (
     <div className="bg-zinc-50">
       <Header />

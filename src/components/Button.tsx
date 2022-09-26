@@ -1,10 +1,31 @@
 import React from "react";
 
-export default function Button({name}:{name:string}){
+export default function Button({name, downUrl}:{name:string, downUrl:string|undefined}){
+
+    const handleDownload = (downUrl: string|undefined) => {
+        if (typeof downUrl === 'string'){   
+            fetch(downUrl, { method: 'GET' })
+				.then(res => {
+					return res.blob();
+				})
+				.then(blob => {
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `image.jpg`;
+					document.body.appendChild(a);
+					a.click();
+					a.remove();
+				})
+				.catch(err => {
+					console.error('err: ', err);
+				});
+        }
+		
+	};
     return(
-        <button type="button" className="flex w-48 h-12 rounded-md font-bmjua text-2xl m-5 bg-orange-100 items-center justify-items-ceneter hover:bg-orange-300">
+        <button onClick={() => handleDownload(downUrl)} type="button" className="flex w-48 h-12 rounded-md font-bmjua text-2xl m-5 bg-orange-100 items-center justify-items-ceneter hover:bg-orange-300">
             <p className="w-full">{name}</p>
         </button>
-    
     );
 }
