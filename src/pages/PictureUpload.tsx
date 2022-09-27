@@ -52,9 +52,13 @@ function PictureUpload() {
 
   return (
     <div className="bg-zinc-50">
-      <LogoutBtn />
-      <MyPageBtn />
-      <Header />
+      <div className="flex flex-row	 items-center md:h-52">
+      
+        <Header />
+        <MyPageBtn />
+        <LogoutBtn />   
+             
+      </div>
       <div
         style={{
           flex: 1,

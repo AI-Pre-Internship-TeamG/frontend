@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 export default function MyPageBtn() {
   return (
-    <div className="MyPageBtn">
-      <div className="float-right mt-[4rem] mr-[3rem] font-sds text-4xl">
+    <div className="flex w-full  bg-orange-400"> 
+      <div className="flex relative left-[4/5] mr-[3rem] mt-[4rem] font-sds text-2xl md:text-4xl ">
         <Link
           to="/mypage"
-          style={{ color: 'inherit', textDecoration: 'inherit' }}
+          style={{color: 'inherit', textDecoration: 'inherit',width:'100%' }}
         >
           My Page
         </Link>

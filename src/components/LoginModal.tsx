@@ -30,12 +30,14 @@ export default function LoginModal({setModalopen}:{setModalopen:any},{navigation
                 <p className="text-4xl my-6  ">깔끔하게 해결해드리겠습니다</p>
                 <img className="w-1/2 my-5" alt="logo" src="images/logo.png" />
                 <p className="text-2xl text-zinc-600" > 간편 로그인 </p>
-                <a href={KAKAO_URL}>
-                <img className="flex w-2/5 my-5"  alt="Kakao" src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" />
-                </a>
-                <a href={GOOGLE_URL}>
-                <img className="flex w-2/5 my-5" alt="google" src="images/google.png" />
-                </a>
+                <div className="flex w-full flex-col justify-center items-center">
+                    <a  className="flex w-full justify-center items-center my-5" href={KAKAO_URL}>
+                        <img  alt="Kakao" src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" />
+                    </a>
+                    <a className="flex w-full h-full justify-center items-center my-5" href={GOOGLE_URL}>
+                        <img  alt="google" src="images/google.png" />
+                    </a>
+                </div>
             </div>
             <button className="rounded border bg-orange-100 border-orange-100 w-1/2 hover:bg-orange-300 my-8" type="button" onClick={closeModal}>
                 <p className="text-2xl">닫기</p>
