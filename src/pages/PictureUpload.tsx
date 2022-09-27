@@ -59,10 +59,11 @@ function PictureUpload() {
             'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${localStorage.getItem('token')}`
             }})
-            .then((response:any) =>(
-              console.log("respone이 들어오면 진행할 것")
+            .then((res:any) =>(
+              
+              navigate("/pictureedit", {state: res.data.url})
           ));
-          navigate("/pictureedit", {state: fileImage})
+          
         } else {
             alert('이미지를 업로드해주세요')
         }
