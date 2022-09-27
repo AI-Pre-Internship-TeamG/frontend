@@ -39,7 +39,7 @@ const MyPage = () => {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": `` // 추후 관리하는 Token 삽입 할 것
+          "Authorization": `Bearer ${localStorage.getItem("token")}` // 추후 관리하는 Token 삽입 할 것
     }});
       setDatas(response.data.images);
       setTotalPages(response.data.meta.pages);

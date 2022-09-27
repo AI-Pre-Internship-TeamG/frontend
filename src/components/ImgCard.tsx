@@ -14,7 +14,7 @@ const deleteData = async (photo: number) => {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": `` // 추후 관리하는 Token 삽입 할 것
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
     }});
     } catch(err) {
       console.log(err);
