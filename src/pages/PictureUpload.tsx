@@ -1,12 +1,16 @@
 import React,{useState,useRef,DragEvent,ChangeEvent,} from 'react';
+import axios from "axios";
+import {blob} from "stream/consumers";
 import { useNavigate} from 'react-router-dom';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 
+
 function PictureUpload() {
   const navigate = useNavigate();
   const [fileImage,setFileImage] = useState<string>("");
+  const [uploadFile, setUploadFile] = useState(new Blob());
   const dropBoxArea = document.getElementById("drop-box");
   dropBoxArea?.addEventListener("dragenter",(event)=>{
     dropBoxArea?.classList.add("highlight")
@@ -15,19 +19,24 @@ function PictureUpload() {
     dropBoxArea?.classList.add("highlight")
   })
 
+
  
   
   const imageUpload = useRef<any>();
   const onClickImageUpload=()=>{
     imageUpload.current.click();
+
   };
   
   const saveFileImage = (e: ChangeEvent<HTMLInputElement>)=>{
     const target  = e.currentTarget;
     const files = (target.files as FileList)[0];
     const  blob = new Blob([files],{type:"images/jpg+png+jpeg"})
+    setUploadFile(blob);
     setFileImage(URL.createObjectURL(blob));
+
   };
+
   const dragOver = (e:DragEvent<HTMLDivElement>)=>{
     e.preventDefault();
 
@@ -37,20 +46,29 @@ function PictureUpload() {
     const Dropfile =( e.dataTransfer.files as FileList)[0];
     const Dropblob = new Blob([Dropfile],{type:"images/jpg+png+jpeg"})
     setFileImage(URL.createObjectURL(Dropblob))
-
-  
   }
 
+   const gotoFileEdit =(fileImage:string)=>{
 
-  const gotoFileEdit =(fileImage:string)=>{
-    if (fileImage){
-      navigate("/pictureedit",{state:fileImage})
-    }else{
-        alert('이미지를 업로드해주세요')
+        if (fileImage) {
+          const frm = new FormData()
+          frm.append('file', uploadFile)
+
+          axios.post("http://localhost:8000/api/v1/photos/upload/", frm ,
+              {headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }})
+            .then((response:any) =>(
+              console.log("respone이 들어오면 진행할 것")
+          ));
+          navigate("/pictureedit", {state: fileImage})
+        } else {
+            alert('이미지를 업로드해주세요')
+        }
     }
-  }
 
-  return (
+    return (
     <div className="bg-zinc-50">
       <LogoutBtn />
       <MyPageBtn />
@@ -108,7 +126,7 @@ function PictureUpload() {
       </div>
       <div className="flex justify-center items-center">
       <button type="button" className="flex justify-center mt-[3rem] font-sds text-4xl md:text-6xl"
-        onClick={()=>gotoFileEdit(fileImage)}>
+    onClick={()=> gotoFileEdit(fileImage)}>
           <p>사 진 결 정</p>
       </button>
       </div>
