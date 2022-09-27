@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-curly-brace-presence */
-import * as React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
@@ -120,6 +121,16 @@ export default function PictureEdit() {
     ['Redo', redoHandler, 'primary'],
   ];
 
+  const [arr, setArr] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const onClick = () => {
+    setCurrentIndex(currentIndex + 1);
+  };
+  const onTouch = () => {
+    setCurrentIndex(currentIndex - 1);
+  };
+  const files = [data, 'kakao.png', 'logo.png'];
+  console.log(files);
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -140,7 +151,7 @@ export default function PictureEdit() {
             <img
               className="flex mt-[0.6rem] w-auto h-auto max-h-[31rem]"
               alt="Upload"
-              src={data}
+              src={files[currentIndex]}
             />
 
             <ReactSketchCanvas
@@ -177,13 +188,13 @@ export default function PictureEdit() {
       >
         미리보기
       </button>
-      {/* <div className="flex float-right mt-[6rem] mr-[26rem]">
+      <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
-          <FaAngleLeft className="flex w-[4rem] h-[3rem]" />
+          <FaAngleLeft className="flex w-[4rem] h-[3rem]" onClick={onClick} />
           <BsEraser className="flex w-[4rem] h-[3rem]" />
-          <FaAngleRight className="flex w-[4rem] h-[3rem]" />
+          <FaAngleRight className="flex w-[4rem] h-[3rem]" onClick={onTouch} />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
