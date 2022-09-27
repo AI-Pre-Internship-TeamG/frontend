@@ -5,9 +5,7 @@ export default function Button({name, downUrl}:{name:string, downUrl:string|unde
     const handleDownload = (downUrl: string|undefined) => {
         if (typeof downUrl === 'string'){   
             fetch(downUrl, { method: 'GET' })
-				.then(res => {
-					return res.blob();
-				})
+				.then(res => res.blob())
 				.then(blob => {
 					const url = window.URL.createObjectURL(blob);
 					const a = document.createElement('a');
