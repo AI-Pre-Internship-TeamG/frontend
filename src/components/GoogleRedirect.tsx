@@ -14,7 +14,7 @@ export default function GoogleRedirect(){
         axios.post('http://localhost:8000/api/v1/users/google/callback/', data)
         .then((response:any) =>{
             localStorage.clear()
-            localStorage.setItem("token",JSON.stringify(response.data.Authorization).split(" ")[1])
+            localStorage.setItem("token",JSON.stringify(response.data.Authorization).split(" ")[1].slice(0, -1))
             console.log(localStorage.getItem("token"))
             window.location.replace('http://localhost:3000/')
         });

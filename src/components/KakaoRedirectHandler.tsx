@@ -14,7 +14,7 @@ export default function KakaoRedirectHandler(){
         axios.post('http://localhost:8000/api/v1/users/kakao/callback/', data)
         .then((response:any) =>{
             localStorage.clear()
-            localStorage.setItem("token",JSON.stringify(response.data.Authorization).split(" ")[1])
+            localStorage.setItem("token",JSON.stringify(response.data.Authorization).split(" ")[1].slice(0, -1))
             console.log(localStorage.getItem("token"))
             window.location.replace('http://localhost:3000/')
 

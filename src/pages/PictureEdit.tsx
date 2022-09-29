@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-curly-brace-presence */
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate} from 'react-router-dom';
 import EditBtn from '../components/EditBtn';
 import axios from 'axios';
+
 
 /* React canvas */
 import {
@@ -21,17 +22,65 @@ import {
 /* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
-import EditTool from '../components/EditTool';
+import { url } from 'inspector';
 
-interface imgLocation {
-  data: string;
-}
 
 export default function PictureEdit() {
   const location = useLocation();
-  const state = location.state as imgLocation;
-  const { data } = state;
+  const state = location.state as string;
+  const img = new Image()
+  img.src = state
+  const [imgwidth,setWidth] = useState(0);
+  const [imgheight,setHeight] = useState(0);
+
+  useEffect(()=>{
+    imgChange()
+    
+  },[])
+  const navigate = useNavigate()
+ 
+  console.log(imgwidth,imgheight)
+
   const canvasRef = React.createRef<ReactSketchCanvasRef>();
+  const canvas = canvasRef.current;
+
+
+  const imgshow = ()=>(
+      <img
+             className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
+             alt="result"
+             style={{width:imgwidth,height:imgheight,zIndex:'999'}}
+             src={files[2]}
+           />
+    )
+  
+  const imgChange = ()=>{
+      if (img.width>=1000 || img.height>=1000 ){
+        img.width /=5
+        img.height /=5
+        setWidth(img.width)
+        setHeight(img.height)
+      }
+      else if ((img.width>=800 && img.width <1000) || (img.height>=800 && img.height <1000) ){
+        img.width /=3
+        img.height /=3
+        setWidth(img.width)
+        setHeight(img.height)
+      }
+      else if ((img.width>=500 && img.width <800) || (img.height>=500 && img.height <800) ){
+        img.width /=2
+        img.height /=2
+        setWidth(img.width)
+        setHeight(img.height)
+      }
+      
+      else {
+        setWidth(img.width)
+        setHeight(img.height)
+      }
+  }
+
+  const [pictureResult,setpictureResult] = useState('');
   const [dataURI, setDataURI] = React.useState<string>('');
   const [exportImageType, setexportImageType] =
     React.useState<ExportImageType>('jpeg');
@@ -63,17 +112,17 @@ export default function PictureEdit() {
   };
 
   const imageExportHandler = async () => {
-    const exportImage = canvasRef.current?.exportImage;
-
-    if (exportImage) {
-      const exportedDataURI = await exportImage(exportImageType);
+    const exportImg = canvasRef.current?.exportImage;
+   
+    if (exportImg) {
+      const exportedDataURI = await exportImg(exportImageType);
       setDataURI(exportedDataURI);
-    }
-
-    const data = {
+      files.length = currentIndex;
+      const data = {
       imgData: dataURI,
-      originImgUrl: '배경 이미지 url 삽입',
-    };
+      originImgUrl:state,
+      };
+    console.log('데이터',data);
 
     axios
       .post('http://localhost:8000/api/v1/photos/process/', data, {
@@ -82,8 +131,18 @@ export default function PictureEdit() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       })
-      .then((response: any) => console.log('respone이 들어오면 진행할 것'));
-  };
+      .then((response: any) =>{
+        const resulturl = `https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/result/${response.data[0].split('/')[1]}`;
+        setpictureResult(resulturl);
+        files.push(resulturl);
+        setCurrentIndex(2)
+        navigate("/pictureedit", {state: resulturl})
+        console.log(files[currentIndex]);
+        console.log(currentIndex)
+        const resultimg = new Image();
+        resultimg.src = resulturl
+      })
+  }}
 
   const undoHandler = () => {
     const undo = canvasRef.current?.undo;
@@ -122,15 +181,14 @@ export default function PictureEdit() {
   ];
 
   const [arr, setArr] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
   const onClick = () => {
     setCurrentIndex(currentIndex + 1);
   };
   const onTouch = () => {
     setCurrentIndex(currentIndex - 1);
   };
-  const files = [data, 'kakao.png', 'logo.png'];
-  console.log(files);
+  const files = ['',state,];
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -146,14 +204,25 @@ export default function PictureEdit() {
       />
       <div className="flex ml-[4rem] text-3xl font-myy">Edit</div>
       <div className="flex justify-center items-center">
-        {data && (
-          <div className="justify-center items-center border-dashed border-8 rounded-3xl h-[30rem] w-[30rem] p-4 ">
+        {state && (
+          <div className="flex justify-center items-center rounded-3xl h-[30rem] w-[30rem] p-4 ">
             <img
-              className="flex mt-[0.6rem] w-auto h-auto max-h-[31rem]"
+              className="flex mt-[0.6rem] absolute w-auto h-auto "
               alt="Upload"
-              src={files[currentIndex]}
+              style={{width:imgwidth,height:imgheight}}
+              src={files[1]}
             />
+      
+             {/* <img
+             className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
+             alt="result"
+             style={{width:imgwidth,height:imgheight,zIndex:'999'}}
+             src={files[2]}
+           />
+             */}
+          
 
+            
             <ReactSketchCanvas
               ref={canvasRef}
               onChange={onChange}
@@ -162,7 +231,8 @@ export default function PictureEdit() {
               id="canvas"
               strokeWidth={50}
               strokeColor="blue"
-              className="w-[60rem] h-[60rem] border-dashed border-8 opacity-20 rounden-3xl stroke-4 stroke-cyan-500 relative -top-full"
+              style={{width:imgwidth,height:imgheight}}
+              className=" max-h-[31rem] max-w-[31rem]  mt-[0.6rem] opacity-20 rounden-3xl stroke-4 stroke-cyan-500 absolute"
             />
             <div className="col-3 panel">
               <div className="d-grid gap-2">

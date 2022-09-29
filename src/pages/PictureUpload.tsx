@@ -1,14 +1,15 @@
-import React,{useState,useRef,DragEvent,ChangeEvent,} from 'react';
+import React,{useState,useRef,DragEvent,ChangeEvent, useEffect,} from 'react';
 import axios from "axios";
 import {blob} from "stream/consumers";
 import { useNavigate} from 'react-router-dom';
+import imageCompression from 'browser-image-compression';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
 
-
 function PictureUpload() {
   const navigate = useNavigate();
+
   const [fileImage,setFileImage] = useState<string>("");
   const [uploadFile, setUploadFile] = useState(new Blob());
   const dropBoxArea = document.getElementById("drop-box");
@@ -19,22 +20,37 @@ function PictureUpload() {
     dropBoxArea?.classList.add("highlight")
   })
 
+  const handleFileOnChange = async (file:any)=>{
+    const options = {  maxWidthOrHeight: 500 };
+    try {
+      const compressedFile = await imageCompression(file, options);
+      const resultFile = new File([compressedFile], compressedFile.name, {
+        type: compressedFile.type,
+      });
+      return resultFile;
+    } catch (error) {
+       return 0;
+      
+    }
 
- 
+  };
   
+ 
   const imageUpload = useRef<any>();
   const onClickImageUpload=()=>{
     imageUpload.current.click();
 
   };
-  
+   
   const saveFileImage = (e: ChangeEvent<HTMLInputElement>)=>{
     const target  = e.currentTarget;
     const files = (target.files as FileList)[0];
+    const comp = handleFileOnChange(files);
+    console.log('comp',comp)
     const  blob = new Blob([files],{type:"images/jpg+png+jpeg"})
     setUploadFile(blob);
     setFileImage(URL.createObjectURL(blob));
-
+    console.log(blob);
   };
 
   const dragOver = (e:DragEvent<HTMLDivElement>)=>{
@@ -49,7 +65,7 @@ function PictureUpload() {
   }
 
    const gotoFileEdit =(fileImage:string)=>{
-
+        console.log(localStorage.getItem('token'))
         if (fileImage) {
           const frm = new FormData()
           frm.append('file', uploadFile)
@@ -87,7 +103,6 @@ function PictureUpload() {
         {!fileImage &&
         <div id = "drop-box" className=" justify-center items-center border-dashed border-8 rounded-3xl h-[20rem] w-[20rem] p-4 border-4  hover:border-amber-600 focus:outline-none
             md:h-[30rem] md:w-[30rem]"
-      
             onDrop={onDropFiles}
             onDragOver={dragOver}
         >
@@ -112,7 +127,7 @@ function PictureUpload() {
       </div>}
       {fileImage &&
         <div className="flex relative top-[15px] justify-center items-center  rounded-3xl h-[30rem] w-[30rem] p-4">
-          <img className = "flex w-auto h-auto max-h-[27rem] md:max-h-[31rem]" alt = "Upload" src={fileImage}/>
+          <img className = "flex max-w-[31rem] h-auto max-h-[27rem] md:max-h-[31rem]" alt = "Upload" src={fileImage}/>
         </div>
       }
       <div className="flex w-44 h-12 rounded-md font-bmjua text-xl m-5 bg-orange-100 items-center justify-items-ceneter relative top-[2rem] hover:bg-orange-300 md:w-52 md:h-12 md:text-2xl">
