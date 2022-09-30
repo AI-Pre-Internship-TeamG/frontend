@@ -2,6 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-curly-brace-presence */
 import React, { useState, useEffect } from 'react';
+
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
@@ -22,8 +23,6 @@ import {
 /* React Icons */
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
-import { url } from 'inspector';
-import { hover } from '@testing-library/user-event/dist/hover';
 
 
 
@@ -50,6 +49,7 @@ export default function PictureEdit() {
   const navigate = useNavigate()
 
 
+
   const canvasRef = React.createRef<ReactSketchCanvasRef>();
   const canvas = canvasRef.current;
 
@@ -65,7 +65,9 @@ export default function PictureEdit() {
 
   const [saveurl, setSaveurl] = useState('');
   const [pictureResult, setpictureResult] = useState('');
+
   const [dataURI, setDataURI] = React.useState<string>('');
+  console.log(dataURI);
   const [exportImageType, setexportImageType] =
     React.useState<ExportImageType>('jpeg');
   const [paths, setPaths] = React.useState<CanvasPath[]>([]);
@@ -134,6 +136,7 @@ export default function PictureEdit() {
     }
 
     const exportImg = canvasRef.current?.exportImage;
+
     if (exportImg) {
       const exportedDataURI = await exportImg(exportImageType);
       setDataURI(exportedDataURI);
@@ -169,6 +172,7 @@ export default function PictureEdit() {
           console.log('에러');
           setLoading(false);
         }
+
       }
     }
   }
@@ -213,13 +217,15 @@ export default function PictureEdit() {
 
   const [arr, setArr] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
+
   const onClick = () => {
-    setCurrentIndex(currentIndex + 1);
+    if (currentIndex < arr.length) setCurrentIndex(currentIndex + 1);
   };
   const onTouch = () => {
-    setCurrentIndex(currentIndex - 1);
+    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
   const files = ['', state.data,];
+
   return (
     <div className="bg-zinc-50">
 
@@ -229,6 +235,8 @@ export default function PictureEdit() {
       <div className="flex ml-[4rem] text-3xl font-myy">Edit</div>
       <div className="flex justify-center items-center">
         {state.data && (
+
+
           <div className="flex justify-center items-center rounded-3xl h-[30rem] w-[30rem] p-4 ">
             <img
               className="flex mt-[0.6rem] absolute w-auto h-auto "
@@ -244,6 +252,7 @@ export default function PictureEdit() {
              src={files[2]}
            />
              */}
+
             <ReactSketchCanvas
               ref={canvasRef}
               onChange={onChange}
@@ -254,14 +263,15 @@ export default function PictureEdit() {
               strokeColor="blue"
               style={{ width: imgwidth, height: imgheight }}
               className=" mt-[0.6rem] opacity-20 rounden-3xl stroke-4 stroke-cyan-500 absolute"
+             
             />
-            <div className="col-3 panel">
+            {/* <div className="col-3 panel">
               <div className="d-grid gap-2">
                 {buttonsWithHandlers.map(([label, handler, themeColor]) =>
                   createButton(label, handler, themeColor)
                 )}
               </div>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
@@ -284,6 +294,7 @@ export default function PictureEdit() {
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-orange-100 flex bg-amber-100 rounded-full">
           <FaAngleLeft style={{color:'#F59E0B'}} className="flex	w-[4rem] h-[3rem] mr-[3rem] " onClick={undoHandler} />
           <FaAngleRight style= {{color:'#F59E0B'}} className="flex 	w-[4rem] h-[3rem]	" onClick={redoHandler} />
+
         </div>
       </div>
       {loading &&
