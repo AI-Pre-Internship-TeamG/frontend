@@ -7773,7 +7773,12 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
-"react@*", "react@^16 || ^17", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.3.0", "react@>= 16.8.0", "react@>=16.8", "react@>=16.8.0":
+"react-sketch-canvas@^6.2.0":
+  "integrity" "sha512-Z56RQN0viV9W3Y+DpZfQMi2lf3pO+UB4l+cMwnx7j7pQ9WHkQwN+qZKVFGANgpjXQMyY42NODF/DXjuKPCMf1w=="
+  "resolved" "https://registry.npmjs.org/react-sketch-canvas/-/react-sketch-canvas-6.2.0.tgz"
+  "version" "6.2.0"
+
+"react@*", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0", "react@>=16.8":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
