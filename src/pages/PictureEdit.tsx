@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-curly-brace-presence */
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
-import { useLocation ,useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EditBtn from '../components/EditBtn';
 import axios from 'axios';
-
 
 /* React canvas */
 import {
@@ -24,63 +23,62 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
 import { url } from 'inspector';
 
-
 export default function PictureEdit() {
   const location = useLocation();
   const state = location.state as string;
-  const img = new Image()
-  img.src = state
-  const [imgwidth,setWidth] = useState(0);
-  const [imgheight,setHeight] = useState(0);
+  const img = new Image();
+  img.src = state;
+  const [imgwidth, setWidth] = useState(0);
+  const [imgheight, setHeight] = useState(0);
 
-  useEffect(()=>{
-    imgChange()
-    
-  },[])
-  const navigate = useNavigate()
- 
-  console.log(imgwidth,imgheight)
+  useEffect(() => {
+    imgChange();
+  }, []);
+  const navigate = useNavigate();
+
+  console.log(imgwidth, imgheight);
 
   const canvasRef = React.createRef<ReactSketchCanvasRef>();
   const canvas = canvasRef.current;
 
+  const imgshow = () => (
+    <img
+      className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
+      alt="result"
+      style={{ width: imgwidth, height: imgheight, zIndex: '999' }}
+      src={files[2]}
+    />
+  );
 
-  const imgshow = ()=>(
-      <img
-             className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
-             alt="result"
-             style={{width:imgwidth,height:imgheight,zIndex:'999'}}
-             src={files[2]}
-           />
-    )
-  
-  const imgChange = ()=>{
-      if (img.width>=1000 || img.height>=1000 ){
-        img.width /=5
-        img.height /=5
-        setWidth(img.width)
-        setHeight(img.height)
-      }
-      else if ((img.width>=800 && img.width <1000) || (img.height>=800 && img.height <1000) ){
-        img.width /=3
-        img.height /=3
-        setWidth(img.width)
-        setHeight(img.height)
-      }
-      else if ((img.width>=500 && img.width <800) || (img.height>=500 && img.height <800) ){
-        img.width /=2
-        img.height /=2
-        setWidth(img.width)
-        setHeight(img.height)
-      }
-      
-      else {
-        setWidth(img.width)
-        setHeight(img.height)
-      }
-  }
+  const imgChange = () => {
+    if (img.width >= 1000 || img.height >= 1000) {
+      img.width /= 5;
+      img.height /= 5;
+      setWidth(img.width);
+      setHeight(img.height);
+    } else if (
+      (img.width >= 800 && img.width < 1000) ||
+      (img.height >= 800 && img.height < 1000)
+    ) {
+      img.width /= 3;
+      img.height /= 3;
+      setWidth(img.width);
+      setHeight(img.height);
+    } else if (
+      (img.width >= 500 && img.width < 800) ||
+      (img.height >= 500 && img.height < 800)
+    ) {
+      img.width /= 2;
+      img.height /= 2;
+      setWidth(img.width);
+      setHeight(img.height);
+    } else {
+      setWidth(img.width);
+      setHeight(img.height);
+    }
+  };
 
-  const [pictureResult,setpictureResult] = useState('');
+  const [pictureResult, setpictureResult] = useState('');
   const [dataURI, setDataURI] = React.useState<string>('');
   const [exportImageType, setexportImageType] =
     React.useState<ExportImageType>('jpeg');
@@ -112,51 +110,45 @@ export default function PictureEdit() {
   };
 
   const imageExportHandler = async () => {
+    const clearCanvas = canvasRef.current?.clearCanvas;
+
+    if (clearCanvas) {
+      clearCanvas();
+    }
     const exportImg = canvasRef.current?.exportImage;
-   
+
     if (exportImg) {
       const exportedDataURI = await exportImg(exportImageType);
       setDataURI(exportedDataURI);
       files.length = currentIndex;
       const data = {
-      imgData: dataURI,
-      originImgUrl:state,
+        imgData: dataURI,
+        originImgUrl: state,
       };
-    console.log('데이터',data);
 
-    axios
-      .post('http://localhost:8000/api/v1/photos/process/', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      .then((response: any) =>{
-        const resulturl = `https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/result/${response.data[0].split('/')[1]}`;
-        setpictureResult(resulturl);
-        files.push(resulturl);
-        setCurrentIndex(2)
-        navigate("/pictureedit", {state: resulturl})
-        console.log(files[currentIndex]);
-        console.log(currentIndex)
-        const resultimg = new Image();
-        resultimg.src = resulturl
-      })
-  }}
+      console.log('데이터', data);
 
-  const undoHandler = () => {
-    const undo = canvasRef.current?.undo;
-
-    if (undo) {
-      undo();
-    }
-  };
-
-  const redoHandler = () => {
-    const redo = canvasRef.current?.redo;
-
-    if (redo) {
-      redo();
+      axios
+        .post('http://localhost:8000/api/v1/photos/process/', data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((response: any) => {
+          console.log(response);
+          const resulturl = `https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/result/${
+            response.data[0].split('/')[1]
+          }`;
+          setpictureResult(resulturl);
+          files.push(resulturl);
+          setCurrentIndex(2);
+          navigate('/pictureedit', { state: resulturl });
+          console.log(files[currentIndex]);
+          console.log(resulturl);
+          const resultimg = new Image();
+          resultimg.src = resulturl;
+        });
     }
   };
 
@@ -175,10 +167,21 @@ export default function PictureEdit() {
     </button>
   );
 
-  const buttonsWithHandlers: Handlers = [
-    ['Undo', undoHandler, 'primary'],
-    ['Redo', redoHandler, 'primary'],
-  ];
+  const undoHandler = () => {
+    const undo = canvasRef.current?.undo;
+
+    if (undo) {
+      undo();
+    }
+  };
+
+  const redoHandler = () => {
+    const redo = canvasRef.current?.redo;
+
+    if (redo) {
+      redo();
+    }
+  };
 
   const [arr, setArr] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -188,7 +191,7 @@ export default function PictureEdit() {
   const onTouch = () => {
     setCurrentIndex(currentIndex - 1);
   };
-  const files = ['',state,];
+  const files = ['', state];
   return (
     <div className="bg-zinc-50">
       <LogoutBtn />
@@ -209,20 +212,10 @@ export default function PictureEdit() {
             <img
               className="flex mt-[0.6rem] absolute w-auto h-auto "
               alt="Upload"
-              style={{width:imgwidth,height:imgheight}}
+              style={{ width: imgwidth, height: imgheight }}
               src={files[1]}
             />
-      
-             {/* <img
-             className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
-             alt="result"
-             style={{width:imgwidth,height:imgheight,zIndex:'999'}}
-             src={files[2]}
-           />
-             */}
-          
 
-            
             <ReactSketchCanvas
               ref={canvasRef}
               onChange={onChange}
@@ -231,16 +224,9 @@ export default function PictureEdit() {
               id="canvas"
               strokeWidth={50}
               strokeColor="blue"
-              style={{width:imgwidth,height:imgheight}}
+              style={{ width: imgwidth, height: imgheight }}
               className=" max-h-[31rem] max-w-[31rem]  mt-[0.6rem] opacity-20 rounden-3xl stroke-4 stroke-cyan-500 absolute"
             />
-            <div className="col-3 panel">
-              <div className="d-grid gap-2">
-                {buttonsWithHandlers.map(([label, handler, themeColor]) =>
-                  createButton(label, handler, themeColor)
-                )}
-              </div>
-            </div>
           </div>
         )}
       </div>
@@ -250,7 +236,6 @@ export default function PictureEdit() {
       >
         확정하기
       </button>
-      {/* <EditBtn name={'확정하기'} onClick={() => imageExportHandler()} /> */}
       <button
         className="float-right mt-[4rem] mr-[4rem] font-sds text-4xl"
         type="button"
@@ -260,9 +245,14 @@ export default function PictureEdit() {
       </button>
       <div className="flex float-right mt-[6rem] mr-[26rem]">
         <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
-          <FaAngleLeft className="flex w-[4rem] h-[3rem]" onClick={onClick} />
-          <BsEraser className="flex w-[4rem] h-[3rem]" />
-          <FaAngleRight className="flex w-[4rem] h-[3rem]" onClick={onTouch} />
+          <FaAngleLeft
+            className="flex w-[4rem] h-[3rem] mr-[3rem]"
+            onClick={undoHandler}
+          />
+          <FaAngleRight
+            className="flex w-[4rem] h-[3rem]"
+            onClick={redoHandler}
+          />
         </div>
       </div>
     </div>
