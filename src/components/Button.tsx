@@ -5,21 +5,6 @@ export default function Button({name, downUrl}:{name:string, downUrl:string|unde
 
     const handleDownload = (downUrl: string|undefined) => {
         if (typeof downUrl === 'string'){   
-        //     fetch(downUrl, { method: 'GET' })
-		// 		.then(res => res.blob())
-		// 		.then(blob => {
-		// 			const url = window.URL.createObjectURL(blob);
-		// 			const a = document.createElement('a');
-		// 			a.href = url;
-		// 			a.download = `image.jpg`;
-		// 			document.body.appendChild(a);
-		// 			a.click();
-		// 			a.remove();
-		// 		})
-		// 		.catch(err => {
-		// 			console.error('err: ', err);
-		// 		});
-        // }
 		try{axios
 			.get(downUrl, {
 			  responseType:'blob'

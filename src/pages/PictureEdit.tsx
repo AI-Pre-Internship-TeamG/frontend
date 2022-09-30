@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/order */
 /* eslint-disable react/jsx-curly-brace-presence */
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import LogoutBtn from '../components/LogoutBtn';
 import MyPageBtn from '../components/MyPageBtn';
-import { useLocation ,useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import EditBtn from '../components/EditBtn';
 import axios from 'axios';
 import Loading from '../components/Loading';
@@ -23,50 +23,48 @@ import {
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 import { BsEraser } from 'react-icons/bs';
 import { url } from 'inspector';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 
 
 export default function PictureEdit() {
-  const [loading,setLoading] = useState(false);
-  const [reload,setreload] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [reload, setreload] = useState(0);
   const location = useLocation();
-  const state=location.state as any;
-  console.log(state)
-  console.log(state.data)
-  console.log(state.url)
+  const state = location.state as any;
   const downloadurl = state.data
   const img = new Image()
   img.src = state.data
-  const [imgwidth,setWidth] = useState(0);
-  const [imgheight,setHeight] = useState(0);
-  const [picmodal,setPicmodal] = useState(false);
+  const [imgwidth, setWidth] = useState(0);
+  const [imgheight, setHeight] = useState(0);
+  const [picmodal, setPicmodal] = useState(false);
+  const [load, setLoad] = useState(false)
   // useEffect(window.location.reload(),[]);
-  
-  useEffect(()=>{
-      setWidth(img.width);
-      setHeight(img.height);
-      // window.location.reload()
-  },[]);
- 
+
+  useEffect(() => {
+    setWidth(img.width);
+    setHeight(img.height);
+    // window.location.reload()
+  }, []);
+
   const navigate = useNavigate()
- 
-  console.log(imgwidth,imgheight)
+
 
   const canvasRef = React.createRef<ReactSketchCanvasRef>();
   const canvas = canvasRef.current;
 
 
-  const imgshow = ()=>(
-      <img
-             className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
-             alt="result"
-             style={{width:imgwidth,height:imgheight,zIndex:'999'}}
-             src={files[2]}
-           />
-    )
+  const imgshow = () => (
+    <img
+      className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
+      alt="result"
+      style={{ width: imgwidth, height: imgheight, zIndex: '999' }}
+      src={files[2]}
+    />
+  )
 
-  const [saveurl,setSaveurl] = useState('');
-  const [pictureResult,setpictureResult] = useState('');
+  const [saveurl, setSaveurl] = useState('');
+  const [pictureResult, setpictureResult] = useState('');
   const [dataURI, setDataURI] = React.useState<string>('');
   const [exportImageType, setexportImageType] =
     React.useState<ExportImageType>('jpeg');
@@ -94,71 +92,86 @@ export default function PictureEdit() {
   });
 
 
-  const gotoFilesave =(fileImage:string)=>{
+  const gotoFilesave = (fileImage: string) => {
     console.log(localStorage.getItem('token'))
-      const frm = new FormData()
-      frm.append('img_url', fileImage)
-      console.log(fileImage);
-      const data = {
-        img_url:fileImage
-      }
-     try{ axios.post("http://localhost:8000/api/v1/photos/", data ,
-          {headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }})
-        .then((res:any) =>(
-          console.log(res)
-         
-      ));}
-      catch(e){
-        console.log(e);
-      }
-      
-    
-}
+
+    const frm = new FormData()
+    frm.append('img_url', fileImage)
+    console.log(fileImage);
+    const data = {
+      img_url: fileImage
+    }
+
+    try {
+      axios.post("http://localhost:8000/api/v1/photos/", data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+      .then((res: any) => (
+        console.log(res)
+
+      ));
+    }
+    catch (e) {
+      console.log(e);
+
+
+    }
+  }
 
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
     setPaths(updatedPaths);
   };
+
   const imageExportHandler = async () => {
+    const clearCanvas = canvasRef.current?.clearCanvas;
+    if (clearCanvas) {
+      clearCanvas();
+    }
+
     const exportImg = canvasRef.current?.exportImage;
-   
     if (exportImg) {
       const exportedDataURI = await exportImg(exportImageType);
       setDataURI(exportedDataURI);
       files.length = currentIndex;
       const data = {
-      imgData: dataURI,
-      originImgUrl:state.url,
+        imgData: exportedDataURI,
+        originImgUrl: state.url,
       };
-  
-    setLoading(true);
-    try{await axios
-      .post('http://localhost:8000/api/v1/photos/process/', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-      .then((response: any) =>{
-        const resulturl = `https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/result/${response.data[0].split('/')[1]}`;
-        setpictureResult(resulturl);
-        files.push(resulturl);
-        navigate("/pictureedit", {state: {data:resulturl}})
-        console.log(resulturl)
-        const resultimg = new Image();
-        resultimg.src = resulturl
-        setLoading(false);
-        setSaveurl(resulturl)
-      });
-      
-    }
-      catch(e){
-        console.log('에러');
-        setLoading(false);
+
+      setLoading(true);
+      if (data.imgData) {
+        try {
+          await axios
+            .post('http://localhost:8000/api/v1/photos/process/', data, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            })
+            .then((response: any) => {
+              const resulturl = `https://team-g-bucket.s3.ap-northeast-2.amazonaws.com/result/${response.data[0].split('/')[1]}`;
+              setpictureResult(resulturl);
+              files.push(resulturl);
+              navigate("/pictureedit", { state: { data: resulturl } })
+              const resultimg = new Image();
+              resultimg.src = resulturl
+              setLoading(false);
+              setSaveurl(resulturl)
+            });
+
+        }
+        catch (e) {
+          console.log('에러');
+          setLoading(false);
+        }
       }
-  }}
+    }
+  }
 
 
 
@@ -206,10 +219,10 @@ export default function PictureEdit() {
   const onTouch = () => {
     setCurrentIndex(currentIndex - 1);
   };
-  const files = ['',state.data,];
+  const files = ['', state.data,];
   return (
     <div className="bg-zinc-50">
-      
+
       <Header />
       <div
       />
@@ -220,11 +233,11 @@ export default function PictureEdit() {
             <img
               className="flex mt-[0.6rem] absolute w-auto h-auto "
               alt="Upload"
-              style={{width:imgwidth,height:imgheight}}
+              style={{ width: imgwidth, height: imgheight }}
               src={files[1]}
             />
-      
-             {/* <img
+
+            {/* <img
              className="flex mt-[0.6rem] relative w-auto h-auto left-1	"
              alt="result"
              style={{width:imgwidth,height:imgheight,zIndex:'999'}}
@@ -239,7 +252,7 @@ export default function PictureEdit() {
               id="canvas"
               strokeWidth={50}
               strokeColor="blue"
-              style={{width:imgwidth,height:imgheight}}
+              style={{ width: imgwidth, height: imgheight }}
               className=" mt-[0.6rem] opacity-20 rounden-3xl stroke-4 stroke-cyan-500 absolute"
             />
             <div className="col-3 panel">
@@ -255,7 +268,7 @@ export default function PictureEdit() {
       <button
         className="float-right mt-[4rem] mr-[4rem] font-bmjua text-3xl rounded-md bg-orange-100  w-48 h-12 hover:bg-orange-300 transition duration-150 ease-out hover:ease-in"
         type="button"
-        onClick={()=>{setPicmodal(true); gotoFilesave(saveurl)}}
+        onClick={() => { setPicmodal(true); gotoFilesave(saveurl) }}
       >
         확정하기
       </button>
@@ -267,21 +280,20 @@ export default function PictureEdit() {
       >
         미리보기
       </button>
-      <div className="flex float-right mt-[6rem] mr-[26rem]">
-        <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-zinc-800 rounded-full">
-          <FaAngleLeft className="flex w-[4rem] h-[3rem]" onClick={onClick} />
-          <BsEraser className="flex w-[4rem] h-[3rem]" />
-          <FaAngleRight className="flex w-[4rem] h-[3rem]" onClick={onTouch} />
+      <div className="flex float-right absolute mt-[6rem] ml-[8rem] left-1/3">
+        <div className="flex w-[15rem] h-[4rem] shadow-2xl justify-center items-center border-solid border-2 border-orange-100 flex bg-amber-100 rounded-full">
+          <FaAngleLeft style={{color:'#F59E0B'}} className="flex	w-[4rem] h-[3rem] mr-[3rem] " onClick={undoHandler} />
+          <FaAngleRight style= {{color:'#F59E0B'}} className="flex 	w-[4rem] h-[3rem]	" onClick={redoHandler} />
         </div>
       </div>
-      {loading && 
+      {loading &&
         <div className="justify-center items-center fixed inset-0 bg-white/[.8]">
-        <Loading setloadingmodal={loading}/>
-        </div>  
+          <Loading setloadingmodal={loading} />
+        </div>
       }
       {picmodal &&
         <div className="fixed inset-0 bg-zinc-900/[.8]">
-          <Picturemodal imgurl = {state.data} picmodal={setPicmodal}/>
+          <Picturemodal imgurl={state.data} picmodal={setPicmodal} />
         </div>
       }
     </div>

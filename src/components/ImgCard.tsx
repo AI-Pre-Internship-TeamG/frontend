@@ -24,11 +24,11 @@ const deleteData = async (photo: number) => {
 
 const ImgCard = ({ data }: { data: Data }) => 
 (
-    <div className="flex flex-col w-1/4 justify-end justify-self-center">
-        <div className="flex h-full w-auto h-auto m-3 object-center justify-center ">
-            <img alt="Img" className="flex h-auto w-auto object-contain " src={data.url} />
+    <div className="flex flex-col  justify-end justify-self-center">
+        <div className="flex h-full w-auto h-auto object-center justify-center ">
+            <img alt="Img" className="flex rounded-md  h-auto w-auto object-contain hover:w-[110%]" src={data.url} />
         </div>
-        <footer className="flex items-center justify-between leading-none p-2 md:p-4">
+        <footer className="flex items-center justify-between leading-none p-2 md:p-4 border-b-2 border-l-2 border-r-2 rounded-md shadow-gray-200">
             <h1 className="text-lg">
                 {data.created_at}
             </h1>

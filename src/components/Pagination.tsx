@@ -14,7 +14,7 @@ const Pagination = ({ page, totalPages, handlePagination }:Props) => {
           <button
             onClick={() => handlePagination(1)}
             type="button"
-            className="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
+            className="relative  inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
           >
             {1}
           </button>
@@ -37,7 +37,7 @@ const Pagination = ({ page, totalPages, handlePagination }:Props) => {
         <button
           onClick={() => handlePagination(1)}
           type="button"
-          className="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20" >
+          className="relative  inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20" >
           {1}
         </button>
         :          
@@ -69,7 +69,7 @@ const Pagination = ({ page, totalPages, handlePagination }:Props) => {
           <button
             onClick={() => handlePagination(page)}
             type="button"
-            className="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"            >
+            className="relative  inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"            >
             {page}
           </button>
         )}
@@ -94,7 +94,7 @@ const Pagination = ({ page, totalPages, handlePagination }:Props) => {
         <button
           onClick={() => handlePagination(1)}
           type="button"
-          className="relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20" >
+          className="relative  inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20" >
           {totalPages}
         </button>
         :          
