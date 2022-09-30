@@ -77,7 +77,7 @@ function PictureUpload() {
             }})
             .then((res:any) =>(
               
-              navigate("/pictureedit", {state: res.data.url})
+              navigate("/pictureedit", {state:{data:fileImage ,url:res.data.url}})
           ));
           
         } else {
@@ -87,16 +87,10 @@ function PictureUpload() {
 
     return (
     <div className="bg-zinc-50">
-      <LogoutBtn />
-      <MyPageBtn />
+      
       <Header />
       <div
-        style={{
-          flex: 1,
-          height: '5px',
-          backgroundColor: 'black',
-          marginBottom: '10px',
-        }}
+        
       />
       <div className="flex ml-[4rem] text-3xl font-myy">Upload</div>
       <div className="flex justify-center items-center flex-col">
@@ -140,8 +134,8 @@ function PictureUpload() {
               ref = {imageUpload} />
       </div>
       </div>
-      <div className="flex justify-center items-center">
-      <button type="button" className="flex justify-center mt-[3rem] font-sds text-4xl md:text-6xl"
+      <div className="flex justify-center items-center ">
+      <button type="button" className="flex rounded-md bg-orange-50	justify-center mt-[3rem] font-bmjua text-6xl md:text-6xl ease-in duration-300 "
     onClick={()=> gotoFileEdit(fileImage)}>
           <p>사 진 결 정</p>
       </button>
