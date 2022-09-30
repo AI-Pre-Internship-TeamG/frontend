@@ -27,8 +27,8 @@ export default function LoginModal({setModalopen}:{setModalopen:any},{navigation
     return(
         <div className="rounded-3xl font-bmjua bg-white w-1/4 h-1/2 z-[999]  absolute left-1/3 top-1/4 justify-center items-center">
             <div className="flex flex-col justify-items-center items-center">
-                <p className="text-3xl my-6  ">깔끔하게 해결해드리겠습니다</p>
-                <img className="w-1/2 my-5" alt="logo" src="images/logo.png" />
+                {/* <p className="text-3xl my-6  ">깔끔하게 해결해드리겠습니다</p> */}
+                <p className="font-dancing text-8xl mt-2">Alone</p>
                 <p className="text-2xl text-zinc-600" > 간편 로그인 </p>
                 <a href={KAKAO_URL}>
                 <img className="flex w-36 my-5"  alt="Kakao" src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" />

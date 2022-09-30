@@ -19,7 +19,7 @@ export default function Login() {
   return (
     <div className="bg-zinc-50">
       <Header />
-      <div className="flex float-right w-[36rem] h-[36rem] mr-[5rem] mt-[5rem]">
+      <div className="flex float-right w-[28rem] h-[28rem] mr-[5rem] mt-[5rem]">
         <img className="MainImage" alt="mainimage" src="images/magic.gif" />
       </div>
       <div className="text-stone-800	flex w-[40rem] h-[4rem] ml-[5rem] mt-[5rem] font-bold font-dancing text-8xl tracking-wide">

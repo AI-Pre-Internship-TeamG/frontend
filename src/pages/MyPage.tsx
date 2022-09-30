@@ -50,8 +50,9 @@ const MyPage = () => {
 
   useEffect(() => {
     getData(page); //
+   
   }, [page]);
-
+  console.log(datas);
   return (
     <>
       
