@@ -31,6 +31,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'SangSangShin';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/SangSangShin.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background-color: rgb(250 250 250);
 }

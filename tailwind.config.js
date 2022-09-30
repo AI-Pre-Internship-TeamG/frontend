@@ -9,6 +9,8 @@ module.exports = {
         melon: ['"116watermelon"'],
         bmjua: ['"BMJUA"'],
         myy: ['"MYYeongnamnu"'],
+        dancing:['"SangSangShin"'],
+        kopub:["KoPubWorldDotum"]
       },
     },
     screens :{

@@ -27,7 +27,6 @@ function App() {
           <Route path="/management" element={<ManagementPage />} />
           <Route path="/oauth/callback/kakao" element={<KakaoRedirectHandler/>} />
           <Route path="/oauth/callback/google" element={<GoogleRedirect/>} />
-
         </Routes>
       </div>
     </BrowserRouter>

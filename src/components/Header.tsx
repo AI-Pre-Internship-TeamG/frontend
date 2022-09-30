@@ -1,12 +1,20 @@
 import React from 'react';
+import LogoutBtn from './LogoutBtn';
+import MyPageBtn from './MyPageBtn';
 
 export default function Header() {
   return (
-    <div className="Logo">
-      <div className="flex p-[50px] w-[30rem] h-[10rem]">
+    <div className="flex flex-row border-b-2 shadow-md shadow-gray-200	bg-orange-50	">
+      <div className="flex  ">
         <a className="flex" href="http://localhost:3000/">
-          <img className="logoImage" alt="logo" src="images/logo.png" />
+          <p className="text-9xl pl-16 font-dancing italic">Alone</p>
         </a>
+          <div className="flex absolute left-[85%] "> 
+            <LogoutBtn />
+          </div>
+          <div className="flex absolute float-right left-[70%] ">
+              <MyPageBtn />
+          </div>  
       </div>
     </div>
   );

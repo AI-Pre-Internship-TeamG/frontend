@@ -54,8 +54,7 @@ const MyPage = () => {
 
   return (
     <>
-      <LogoutBtn />
-      <MyPageBtn />
+      
       <Header/>
       <div className="m-4">  
         <ImgList data={datas} />
