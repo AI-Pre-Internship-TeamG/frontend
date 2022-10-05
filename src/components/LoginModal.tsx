@@ -6,11 +6,11 @@ import 'axios';
 
 const KAKAO_AUTH_API =' https://kauth.kakao.com/oauth/authorize?response_type=code';
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const REDIRECT_URI ='http://localhost:8080/oauth/callback/kakao';
+const REDIRECT_URI ='http://localhost:3000/oauth/callback/kakao';
 
 const SCOPE ='https://www.googleapis.com/auth/userinfo.email';
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const GOOGLE_REDIRECT_URI ='http://localhost:8080/oauth/callback/google';
+const GOOGLE_REDIRECT_URI ='http://localhost:3000/oauth/callback/google';
 
 const KAKAO_URL = `${KAKAO_AUTH_API}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
 const GOOGLE_URL = `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&client_id=${GOOGLE_CLIENT_ID}&response_type=code&redirect_uri=${GOOGLE_REDIRECT_URI}&scope=${SCOPE}`;
