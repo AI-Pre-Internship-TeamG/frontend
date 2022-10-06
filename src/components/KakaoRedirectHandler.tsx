@@ -14,7 +14,7 @@ export default function KakaoRedirectHandler(){
             localStorage.clear()
             localStorage.setItem("token",JSON.stringify(response.data.Authorization).split(" ")[1].slice(0, -1))
             console.log(localStorage.getItem("token"))
-            window.location.replace('http://localhost:8080/')
+            window.location.replace('http://localhost:3000/')
 
         });
     },[])

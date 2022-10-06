@@ -6,8 +6,7 @@ WORKDIR /frontend
 COPY . /frontend
 COPY package.json yarn.lock ./
 
-RUN npm install -g && npm install -g typescript
 RUN yarn --ignore-platform
 COPY . ./
 
-RUN yarn run build
+CMD [ "yarn", "start" ]
